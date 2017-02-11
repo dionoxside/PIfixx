@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mosque"
+            android:icon="@drawable/ic_action_name"
+            android:title="Masjid" />
+        <item
+            android:id="@+id/Gereja_Kristen"
+            android:icon="@drawable/ic_action_kristen"
+            android:title="Kristen" />
+        <item
+            android:id="@+id/Gereja_Katolik"
+            android:icon="@drawable/ic_action_katolik"
+            android:title="Katolik" />
+        <item
+            android:id="@+id/hindu_temple"
+            android:icon="@drawable/ic_action_hindu"
+            android:title="Hindu" />
+        <item
+            android:id="@+id/budha_temple"
+            android:icon="@drawable/ic_action_budha"
+            android:title="Budha"/>
+    </group>
+        <item android:title="other">
+            <menu>
+                <item
+                    android:id="@+id/about"
+                    android:title="About"
+                    android:icon="@drawable/ic_about"/>
+                <item
+                    android:id="@+id/tutorial"
+                    android:title="Tutorial"
+                    android:icon="@drawable/ic_tutorial"/>
+            <item
+                android:id="@+id/exit"
+                android:title="Exit"
+                android:icon="@drawable/ic_action_exit"/>
+            </menu>
+        </item>
+
+</menu>

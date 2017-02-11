@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Place Of Worship</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="location_permission_denied" />
+    <string name="permission_required_toast" />
+    <string name="permission_rationale_location" />
+    <string name="satelite" >Satelite</string>
+    <string name="Hybird" >Hybird</string>
+    <string name="Terain" >Terain</string>
+    <string name="Normal" >Normal</string>
+    <string name="next">next</string>
+    <string name="skip">skip</string>
+    <string name="judul">Welcome To Nearby</string>
+    <string name="bawah">Place of worship</string>
+    <string name="gps">GPS</string>
+    <string name="slide_2_desc">This application give you information based on your location. So, you must turn your GPS On.\n\nSettings -> Location -> Turn On</string>
+    <string name="judul2">INTERNET</string>
+    <string name="slide_3_desc">The information obtained from the Internet. So, turn on your internet data or wifi.\n\nSettings -> Mobile data -> Turn On</string>
+    <string name="radius">Radius :</string>
+    <string name="activate">Tap to find your location</string>
+    <string name="config">Change your radius</string>
+    <string name="select">Select the category</string>
+    <string name="descgps">App will find your current location base gps service</string>
+    <string name="descradius">You can change the radius in accordance with the provided</string>
+    <string name="desccategory">You can change the category you want to search the house of worship</string>
+</resources>

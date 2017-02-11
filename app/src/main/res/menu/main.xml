@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/satelite"
+        android:orderInCategory="100"
+        android:title="@string/satelite"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Hybird"
+        android:orderInCategory="100"
+        android:title="@string/Hybird"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Terain"
+        android:orderInCategory="100"
+        android:title="@string/Terain"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Normal"
+        android:orderInCategory="100"
+        android:title="@string/Normal"
+        app:showAsAction="never"/>
+</menu>
