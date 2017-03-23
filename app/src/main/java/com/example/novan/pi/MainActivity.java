@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.util.ArraySet;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,8 +35,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.concurrent.atomic.AtomicIntegerArray;
-
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
@@ -43,11 +42,12 @@ public class MainActivity extends AppCompatActivity
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     public GoogleMap mMap;
-    String radius = "1000";
+    String hasil = "";
+    String jarak = "1000";
     String tipe = " ";
     String nama = " ";
+    Toast toast;
     GoogleApiClient mGoogleApiClient;
-    Toast t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +66,26 @@ public class MainActivity extends AppCompatActivity
         SupportMapFragment sMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.maps);
         sMapFragment.getMapAsync(this);
+        toast.makeText(getApplicationContext(),"",Toast.LENGTH_SHORT);
         final TextView radius1 = (TextView)findViewById(R.id.radius);
         SeekBar seekBar = (SeekBar) findViewById(R.id.seek_bar_radius);
         seekBar.setMax(10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                radius = String.valueOf(progress*1000);
-                Log.e("radius",radius);
-                makeRequest(tipe,nama,radius);
-                //Toast.makeText(getApplicationContext(),"Radius : "+radius, Toast.LENGTH_SHORT).show();
-                radius1.setText(radius);
+            public void onProgressChanged(final SeekBar seekBar, int progress, boolean b) {
+                jarak = String.valueOf(progress*1000);
+                Log.e("radius",jarak);
+                makeRequest(tipe,nama,jarak);
+                radius1.setText(jarak);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-//                Toast.makeText(getApplicationContext(),"seekbar touch started!", Toast.LENGTH_SHORT).show();
+//                toast.cancel();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-//                Toast.makeText(getApplicationContext(),"seekbar touch stopped!", Toast.LENGTH_SHORT).show();
             }
         });
             // Create an instance of GoogleAPIClient.
@@ -114,7 +113,6 @@ public class MainActivity extends AppCompatActivity
 
     protected void onStop() {
         mGoogleApiClient.disconnect();
-        t.cancel();
         super.onStop();
     }
 
@@ -157,24 +155,24 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.mosque) {
             tipe = "mosque";
             nama = "";
-            makeRequest(tipe,nama,radius);
+            makeRequest(tipe,nama,jarak);
 
         } else if (id == R.id.Gereja_Kristen) {
             tipe = "place_of_worship";
             nama = "kristen";
-            makeRequest(tipe,nama,radius);
+            makeRequest(tipe,nama,jarak);
         } else if (id == R.id.Gereja_Katolik) {
             tipe = "church";
             nama = "katolik";
-            makeRequest(tipe,nama,radius);
+            makeRequest(tipe,nama,jarak);
         } else if (id == R.id.hindu_temple) {
             tipe = "hindu_temple";
             nama = "";
-            makeRequest(tipe,nama,radius);
+            makeRequest(tipe,nama,jarak);
         } else if (id == R.id.budha_temple) {
             tipe = "place_of_worship";
             nama = "vihara";
-            makeRequest(tipe,nama,radius);
+            makeRequest(tipe,nama,jarak);
         }else if (id== R.id.about){
             AlertDialog.Builder about = new AlertDialog.Builder(this);
             about.setMessage
@@ -315,9 +313,10 @@ public class MainActivity extends AppCompatActivity
                                     .snippet(alamat)
                                     .title(nama)
                                     .position(kordinat));
-//                      t.makeText(getApplication(), "Ditemukan " + result.length() + " Tempat Beribadah", Toast.LENGTH_SHORT).show();
-                        showToastMessage("Ditemukan " + result.length() + " Tempat Beribadah",1000);
+//                      Toast.makeText(getApplicationContext(), "Ditemukan " + result.length() + " Tempat Beribadah", Toast.LENGTH_SHORT).show();
+//                            showToastMessage("Ditemukan " + result.length() + " Tempat Beribadah");
                         }
+                        Toast.makeText(getApplicationContext(), "Ditemukan " + result.length() + " Tempat Beribadah", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -341,16 +340,20 @@ public class MainActivity extends AppCompatActivity
         Intent p = new Intent(this,Tutorial.class);
         startActivity(p);
     }
-    public void showToastMessage(String text, int duration){
-        final Toast toast = Toast.makeText(getApplication(),text, Toast.LENGTH_SHORT);
+    public void showToastMessage(String text){
+        final Toast toast = Toast.makeText(MainActivity.this,text, Toast.LENGTH_SHORT);
         toast.show();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                this.finish();
+            }
+            private void finish(){
                 toast.cancel();
             }
-        }, duration);
+        }, 1000);
     }
 }
 
