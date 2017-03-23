@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +34,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.concurrent.atomic.AtomicIntegerArray;
+
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     String tipe = " ";
     String nama = " ";
     GoogleApiClient mGoogleApiClient;
+    Toast t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -67,14 +68,13 @@ public class MainActivity extends AppCompatActivity
         sMapFragment.getMapAsync(this);
         final TextView radius1 = (TextView)findViewById(R.id.radius);
         SeekBar seekBar = (SeekBar) findViewById(R.id.seek_bar_radius);
-//        seekBar.setThumb(getResources().getDrawable(R.drawable.seebar));
         seekBar.setMax(10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                makeRequest(tipe,nama,radius);
                 radius = String.valueOf(progress*1000);
                 Log.e("radius",radius);
+                makeRequest(tipe,nama,radius);
                 //Toast.makeText(getApplicationContext(),"Radius : "+radius, Toast.LENGTH_SHORT).show();
                 radius1.setText(radius);
             }
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity
 
     protected void onStop() {
         mGoogleApiClient.disconnect();
+        t.cancel();
         super.onStop();
     }
 
@@ -314,7 +315,8 @@ public class MainActivity extends AppCompatActivity
                                     .snippet(alamat)
                                     .title(nama)
                                     .position(kordinat));
-                            Toast.makeText(getApplication(), "Ditemukan " + result.length() + " Tempat Beribadah", Toast.LENGTH_SHORT).show();
+//                      t.makeText(getApplication(), "Ditemukan " + result.length() + " Tempat Beribadah", Toast.LENGTH_SHORT).show();
+                        showToastMessage("Ditemukan " + result.length() + " Tempat Beribadah",1000);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -338,6 +340,17 @@ public class MainActivity extends AppCompatActivity
     public void tutorial(){
         Intent p = new Intent(this,Tutorial.class);
         startActivity(p);
+    }
+    public void showToastMessage(String text, int duration){
+        final Toast toast = Toast.makeText(getApplication(),text, Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, duration);
     }
 }
 

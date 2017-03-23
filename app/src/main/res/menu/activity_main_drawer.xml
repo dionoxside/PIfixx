@@ -9,19 +9,19 @@
         <item
             android:id="@+id/Gereja_Kristen"
             android:icon="@drawable/ic_action_kristen"
-            android:title="Kristen" />
+            android:title="Gereja Kristen" />
         <item
             android:id="@+id/Gereja_Katolik"
             android:icon="@drawable/ic_action_katolik"
-            android:title="Katolik" />
+            android:title="Gereja Katolik" />
         <item
             android:id="@+id/hindu_temple"
             android:icon="@drawable/ic_action_hindu"
-            android:title="Hindu" />
+            android:title="Pura" />
         <item
             android:id="@+id/budha_temple"
             android:icon="@drawable/ic_action_budha"
-            android:title="Budha"/>
+            android:title="Wihara"/>
     </group>
         <item android:title="other">
             <menu>
